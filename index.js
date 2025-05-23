@@ -51,10 +51,13 @@ app.post("/submit", async (req, res) => {
       'INSERT INTO contact_form ("Name", email, comment) VALUES ($1, $2, $3)',
       [name, email, comment]
     );
-    res.status(200).send("Contact form submitted successfully!");
+    const result_form = `Status: ${res.statusCode} - Contact form submitted successfully!`;
+    res.render("submit", { result_form });
   } catch (error) {
     console.error("Database error:", error);
-    res.status(500).send("Error saving to database");
+    res.status(500);
+    const result_form = `Status: ${res.statusCode} - Error saving to database`;
+    res.render("submit", { result_form });
   }
 });
 
