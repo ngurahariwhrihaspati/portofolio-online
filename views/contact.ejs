@@ -1,0 +1,20 @@
+<%- include("partials/header.ejs") %>
+
+<h1>Contact Me</h1>
+<form method="POST" action="/submit">
+  <% if (locals.error) { %>
+    <div class="error-popup">
+      <span class="error-icon">&#9888;</span>
+      <%= error %>
+      <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+  <% } %>
+  <input name="name" type="text" class="feedback-input" placeholder="Name" />
+  <input name="email" type="text" class="feedback-input" placeholder="Email" />
+  <textarea name="comment-text" class="feedback-input" placeholder="Comment"></textarea>
+  <input type="submit" value="SUBMIT" />
+</form>
+
+
+
+<%- include("partials/footer.ejs") %>

@@ -1,0 +1,154 @@
+.profile-section {
+    background-color: lightgray;
+    padding: 20px;
+    text-align: center;
+}
+
+.profile-pic {
+    width: 200px;  /* Adjust the width */
+    height: 200px; /* Adjust the height */
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image circular */
+    display: block;
+    margin: 0 auto; /* Centers the image */
+}
+
+.profile {
+    margin: 0 auto;
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .c25c {
+    
+    list-style: none;
+    padding: 0;
+  }
+
+  .container.flex {
+    display: flex;
+    /* gap: 20px; Adds spacing between the columns */
+  }
+  
+  .links {
+    flex: 1.5; /* 30% of the row space */
+    position: relative; /* Enables positioning of child elements */
+  }
+  
+  .bottom-left-link {
+    position: absolute; /* Position relative to the parent container */
+    bottom: 10px; /* Distance from the bottom */
+    left: 10px; /* Distance from the left */
+    text-decoration: none; /* Remove underline */
+    /* Link color */
+    font-weight: bold;
+  }
+  
+  .bottom-left-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
+  
+  .map {
+    flex: 8.5; /* 70% of the row space */
+  }
+  
+  .c25c li {
+    margin-bottom: 10px;
+  }
+  
+  .c25c a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  
+  .c25c a:hover {
+    text-decoration: underline;
+  }
+
+.summary {
+    background-color: aliceblue;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.education {
+    background-color: lightgray;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.work_exp {
+    background-color: lightblue;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.skills {
+    background-color: lightgreen;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.menu {
+    text-align: left !important; /* Ensures menu text aligns left */
+}
+
+.menu li {
+    display: block;
+    text-align: left;
+}
+
+.profile-section, 
+.summary {
+    text-align: center;
+}
+
+.profile-pic {
+    display: block;
+    margin: 0 auto; /* Centers image */
+}
+
+.Ijazah {
+    text-align: center;
+}
+
+.Ijazah p {
+    margin: 0;
+}
+
+.error-popup {
+    position: relative;
+    background: #ffe0e0;
+    color: #b30000;
+    border: 1px solid #b30000;
+    border-radius: 5px;
+    padding: 10px 35px 10px 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    animation: fadeIn 0.5s;
+  }
+  .error-icon {
+    margin-right: 8px;
+    font-size: 1.2em;
+  }
+  .close-btn {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #b30000;
+    background: none;
+    border: none;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+
+
+
