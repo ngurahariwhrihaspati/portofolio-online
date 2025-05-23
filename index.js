@@ -56,7 +56,7 @@ app.post("/submit", async (req, res) => {
   } catch (error) {
     console.error("Database error:", error);
     res.status(500);
-    const result_form = `Status: ${res.statusCode} - Error saving to database`;
+    const result_form = `Status: ${res.statusCode} - Email should contain youremail@email.com`;
     res.render("submit", { result_form });
   }
 });
