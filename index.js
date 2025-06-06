@@ -2,9 +2,11 @@ import express from "express";
 import path from "path"; 
 import bodyParser from "body-parser";
 import pg from "pg";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const db = new pg.Client({
   user: process.env.PGUSER,
@@ -23,7 +25,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.render("index", { title: "Home Page" });
+  res.render("index", { 
+    title: "Home Page",
+    googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY
+  });
 });
 
 app.get("/contact", (req, res) => {
