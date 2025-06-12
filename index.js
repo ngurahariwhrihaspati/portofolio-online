@@ -3,6 +3,11 @@ import path from "path";
 import bodyParser from "body-parser";
 import pg from "pg";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import GoogleStrategy from "passport-google-oauth2";
+import session from "express-session";
 dotenv.config();
 
 const app = express();
@@ -23,6 +28,20 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "default_secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax"
+    }
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/", (req, res) => {
   res.render("index", { 
@@ -66,6 +85,185 @@ app.post("/submit", async (req, res) => {
   }
 });
 
+// Add authentication routes and logic from local version
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
+});
+
+app.get("/register", (req, res) => {
+  res.render("register.ejs");
+});
+
+app.get("/home", (req, res) => {
+  res.render("home", { title: "Home Page" });
+});
+
+app.get("/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+app.get("/auth/google/secrets",
+  passport.authenticate("google", {
+    successRedirect: "/secrets",
+    failureRedirect: "/login",
+  })
+);
+
+passport.use(
+  "local",
+  new Strategy(async function verify(username, password, cb) {
+    try {
+      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
+        username,
+      ]);
+      if (result.rows.length > 0) {
+        const user = result.rows[0];
+        const storedHashedPassword = user.password;
+        bcrypt.compare(password, storedHashedPassword, (err, valid) => {
+          if (err) {
+            console.error("Error comparing passwords:", err);
+            return cb(err);
+          } else {
+            if (valid) {
+              return cb(null, user);
+            } else {
+              return cb(null, false);
+            }
+          }
+        });
+      } else {
+        return cb("User not found");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  })
+);
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "http://localhost:3000/auth/google/secrets",
+      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+    },
+    async (accessToken, refreshToken, profile, cb) => {
+      try {
+        console.log("Google profile:", profile);
+        const result = await db.query("SELECT * FROM users WHERE email = $1", [
+          profile.email,
+        ]);
+        if (result.rows.length === 0) {
+          const newUser = await db.query(
+            "INSERT INTO users (email, password) VALUES ($1, $2)",
+            [profile.email, "google"]
+          );
+          return cb(null, newUser.rows[0]);
+        } else {
+          return cb(null, result.rows[0]);
+        }
+      } catch (error) {
+        return cb(error);
+      }
+    }
+  )
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user.email);
+});
+
+passport.deserializeUser(async (email, done) => {
+  try {
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (result.rows.length > 0) {
+      done(null, result.rows[0]);
+    } else {
+      done(null, false);
+    }
+  } catch (err) {
+    done(err, null);
+  }
+});
+
+app.post(
+  "/login",
+  (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) {
+        return res.render("login.ejs", { error: "An error occurred. Please try again." });
+      }
+      if (!user) {
+        return res.render("login.ejs", { error: "Invalid email or password." });
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return res.render("login.ejs", { error: "Login failed. Please try again." });
+        }
+        return res.redirect("/secrets");
+      });
+    })(req, res, next);
+  }
+);
+
+app.post("/register", async (req, res) => {
+  const email = req.body.username;
+  const password = req.body.password;
+
+  if (!email || !password) {
+    return res.render("register.ejs", { error: "Email and password are required." });
+  }
+
+  try {
+    const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
+      email,
+    ]);
+
+    if (checkResult.rows.length > 0) {
+      return res.render("register.ejs", { error: "Email is already registered. Please log in." });
+    } else {
+      bcrypt.hash(password, 10, async (err, hash) => {
+        if (err) {
+          return res.render("register.ejs", { error: "Error hashing password. Please try again." });
+        } else {
+          const result = await db.query(
+            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
+            [email, hash]
+          );
+          const user = result.rows[0];
+          req.login(user, (err) => {
+            if (err) {
+              return res.render("register.ejs", { error: "Registration succeeded but login failed. Please log in manually." });
+            }
+            res.redirect("/secrets");
+          });
+        }
+      });
+    }
+  } catch (err) {
+    return res.render("register.ejs", { error: "An error occurred. Please try again." });
+  }
+});
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+app.get("/secrets", ensureAuthenticated, (req, res) => {
+  res.redirect("https://1drv.ms/f/c/19cc2ee907a58255/ElWCpQfpLswggBln5gAAAAABMEnSU9kzV9d0aZHrTD-N4w?e=2HGg0N");
+});
+
+app.get('/logout', (req, res) => {
+  req.logout(() => {
+    res.redirect('/login');
+  });
+});
 
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
