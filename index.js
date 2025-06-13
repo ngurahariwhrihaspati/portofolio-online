@@ -28,6 +28,8 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.set('trust proxy', 1); // Add this line for Render/Heroku/Proxies
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "default_secret",
@@ -256,7 +258,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.get("/secrets", ensureAuthenticated, (req, res) => {
-  res.redirect("https://1drv.ms/f/c/19cc2ee907a58255/ElWCpQfpLswggBln5gAAAAABMEnSU9kzV9d0aZHrTD-N4w?e=2HGg0N");
+  res.redirect(process.env.ONEDRIVE_SECRET_LINK);
 });
 
 app.get('/logout', (req, res) => {
