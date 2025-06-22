@@ -1,14 +1,18 @@
 # Ignore environment variable files
 .env
-.env.*
+*.env
 # Node modules
 node_modules/
 # OS generated files
 .DS_Store
-Thumbs.db
 # Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+# IDE folders
+.idea/
+.vscode/
+# Coverage reports
+coverage/
 # Database keys and sensitive files
 db_key.txt

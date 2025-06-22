@@ -267,6 +267,10 @@ app.get('/logout', (req, res) => {
   });
 });
 
+app.get("/website", (req, res) => {
+  res.render("website.ejs");
+});
+
 app.listen(port, () => {
     console.log(`Server started on http://localhost:${port}`);
 });
