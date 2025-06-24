@@ -11,7 +11,7 @@ function initMap() {
     });
 
     const infoWondow = new google.maps.InfoWindow({
-        content: "<h2>Neautiful minds</h2><p>Jl. Raya Puputan No. 1, Renon, Denpasar Selatan, Kota Denpasar, Bali 80235</p>"
+        content: "<h2>Ngurah's Cribs</h2><p>Jl. Imam Bonjol no.68, Pemecutan, Denpasar Barat, Kota Denpasar, Bali 80119</p>"
     });
 
     marker.addListener('click', () => {
