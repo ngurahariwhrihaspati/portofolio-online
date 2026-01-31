@@ -13,14 +13,25 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Enable SSL for hosted Postgres (e.g., Render) and add error handling
 const db = new pg.Client({
   user: process.env.PGUSER,
   host: process.env.PGHOST,
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
+  ssl: { rejectUnauthorized: false },
 });
-db.connect();
+
+db.connect()
+  .then(() => console.log('Connected to Postgres'))
+  .catch((err) => {
+    console.error('Failed to connect to Postgres:', err);
+  });
+
+db.on('error', (err) => {
+  console.error('Postgres client error:', err);
+});
 
 // Set EJS as the templating engine
 app.set("view engine", "ejs");
@@ -149,7 +160,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://ngurahs-portofolio-online.onrender.com/auth/google/secrets",
+      callbackURL: process.env.GOOGLE_CALLBACK_URL || "http://localhost:3000/auth/google/secrets",
       userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     },
     async (accessToken, refreshToken, profile, cb) => {
