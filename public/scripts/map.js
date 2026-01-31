@@ -11,7 +11,7 @@ function initMap() {
     });
 
     const infoWondow = new google.maps.InfoWindow({
-        content: "<h2>Ngurah's Cribs</h2><p>Jl. Imam Bonjol no.68, Pemecutan, Denpasar Barat, Kota Denpasar, Bali 80119</p>"
+        content: "<h2>Ngurah's Workshop</h2><p>Jl. Imam Bonjol no.68, Pemecutan, Denpasar Barat, Kota Denpasar, Bali 80119</p>"
     });
 
     marker.addListener('click', () => {
