@@ -21,12 +21,6 @@
     border-radius: 50%;
   }
 
-  .c25c {
-    
-    list-style: none;
-    padding: 0;
-  }
-
   .container.flex {
     display: flex;
     /* gap: 20px; Adds spacing between the columns */
@@ -52,19 +46,6 @@
   
   .map {
     flex: 8.5; /* 70% of the row space */
-  }
-  
-  .c25c li {
-    margin-bottom: 10px;
-  }
-  
-  .c25c a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  
-  .c25c a:hover {
-    text-decoration: underline;
   }
 
 .summary {
@@ -95,8 +76,11 @@
     text-align: left !important; /* Ensures menu text aligns left */
 }
 
+.menu ul {
+  list-style-position: inside;
+}
+
 .menu li {
-    display: block;
     text-align: left;
 }
 
