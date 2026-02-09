@@ -95,7 +95,7 @@ button:hover {
 }
 
 ul {
-  list-style: disc;
+  list-style-type: disc;
   margin-left: 1.25rem;
   padding-left: 1.25rem;
 }
