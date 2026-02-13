@@ -11,7 +11,6 @@ import session from "express-session";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 // Enable SSL for hosted Postgres (e.g., Render) and add error handling
 const db = new pg.Client({
