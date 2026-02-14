@@ -14,5 +14,6 @@ yarn-error.log
 .vscode/
 # Coverage reports
 coverage/
+*.log
 # Database keys and sensitive files
 db_key.txt

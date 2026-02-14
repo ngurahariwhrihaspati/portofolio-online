@@ -19,7 +19,7 @@ const db = new pg.Client({
   database: process.env.PGDATABASE,
   password: process.env.PGPASSWORD,
   port: process.env.PGPORT,
-  ssl: { rejectUnauthorized: true },
+  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: true } : false,
 });
 
 db.connect()
@@ -42,7 +42,7 @@ app.use(bodyParser.json());
 app.set('trust proxy', 1); // Add this line for Render/Heroku/Proxies
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "default_secret",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -159,8 +159,8 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://ngurahs-portofolio-online.onrender.com/auth/google/secrets",
-      userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      userProfileURL: process.env.GOOGLE_USER_PROFILE_URL
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
@@ -281,3 +281,8 @@ app.get("/website", (req, res) => {
   res.render("website.ejs");
 });
 
+const port = process.env.PORT;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+  console.log(`Environment: ${process.env.NODE_ENV}`);
+});
