@@ -1,34 +1,58 @@
 import express from "express";
 import path from "path"; 
 import bodyParser from "body-parser";
-import pg from "pg";
+import pkg from "pg";
+const { Pool } = pkg;
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import GoogleStrategy from "passport-google-oauth2";
 import session from "express-session";
+import { RedisStore } from "connect-redis";
+import { createClient } from "redis";
 dotenv.config();
 
 const app = express();
-
-// Enable SSL for hosted Postgres (e.g., Render) and add error handling
-const db = new pg.Client({
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: process.env.PGPORT,
-  ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: true } : false,
+// trust Render proxy so secure cookies work
+app.set("trust proxy", 1);
+const redisClient = createClient({
+  url: process.env.REDIS_URL, // from Render Redis
 });
 
-db.connect()
+redisClient.on("error", (err) => {
+  console.error("Redis error:", err);
+});
+
+await redisClient.connect();
+
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    }
+  })
+);
+
+// Enable SSL for hosted Postgres (e.g., Render) and add error handling
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: false, // internal Render connection
+});
+
+pool.connect()
   .then(() => console.log('Connected to Postgres'))
   .catch((err) => {
     console.error('Failed to connect to Postgres:', err);
   });
 
-db.on('error', (err) => {
+pool.on('error', (err) => {
   console.error('Postgres client error:', err);
 });
 
@@ -39,19 +63,6 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.set('trust proxy', 1); // Add this line for Render/Heroku/Proxies
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax"
-    }
-  })
-);
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -83,7 +94,7 @@ app.post("/submit", async (req, res) => {
 
   // Insert into PostgreSQL contact_form table
   try {
-    await db.query(
+    await pool.query(
       'INSERT INTO contact_form ("Name", email, comment) VALUES ($1, $2, $3)',
       [name, email, comment]
     );
@@ -127,7 +138,7 @@ passport.use(
   "local",
   new Strategy(async function verify(username, password, cb) {
     try {
-      const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
+      const result = await pool.query("SELECT * FROM users WHERE email = $1 ", [
         username,
       ]);
       if (result.rows.length > 0) {
@@ -165,12 +176,12 @@ passport.use(
     async (accessToken, refreshToken, profile, cb) => {
       try {
         console.log("Google profile:", profile);
-        const result = await db.query("SELECT * FROM users WHERE email = $1", [
+        const result = await pool.query("SELECT * FROM users WHERE email = $1", [
           profile.emails[0].value,
         ]);
         if (result.rows.length === 0) {
-          const newUser = await db.query(
-            "INSERT INTO users (email, password) VALUES ($1, $2)",
+          const newUser = await pool.query(
+            "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
             [profile.emails[0].value, "google"]
           );
           return cb(null, newUser.rows[0]);
@@ -190,7 +201,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (email, done) => {
   try {
-    const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
     if (result.rows.length > 0) {
       done(null, result.rows[0]);
     } else {
@@ -230,7 +241,7 @@ app.post("/register", async (req, res) => {
   }
 
   try {
-    const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [
+    const checkResult = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
     ]);
 
@@ -241,7 +252,7 @@ app.post("/register", async (req, res) => {
         if (err) {
           return res.render("register.ejs", { error: "Error hashing password. Please try again." });
         } else {
-          const result = await db.query(
+          const result = await pool.query(
             "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *",
             [email, hash]
           );
@@ -284,5 +295,4 @@ app.get("/website", (req, res) => {
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  console.log(`Environment: ${process.env.NODE_ENV}`);
 });
