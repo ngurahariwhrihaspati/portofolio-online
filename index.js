@@ -1,44 +1,22 @@
 import express from "express";
-import path from "path"; 
 import bodyParser from "body-parser";
 import pkg from "pg";
-const { Pool } = pkg;
 import dotenv from "dotenv";
-import bcrypt from "bcrypt";
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import GoogleStrategy from "passport-google-oauth2";
-import session from "express-session";
-import { RedisStore } from "connect-redis";
-import { createClient } from "redis";
+import bcrypt from "bcrypt";
+
+const { Pool } = pkg;
+const PgSession = connectPgSimple(session);
+
 dotenv.config();
 
 const app = express();
 // trust Render proxy so secure cookies work
 app.set("trust proxy", 1);
-const redisClient = createClient({
-  url: process.env.REDIS_URL, // from Render Redis
-});
-
-redisClient.on("error", (err) => {
-  console.error("Redis error:", err);
-});
-
-await redisClient.connect();
-
-app.use(
-  session({
-    store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      sameSite: "lax",
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-    }
-  })
-);
 
 // Enable SSL for hosted Postgres (e.g., Render) and add error handling
 const pool = new Pool({
@@ -55,6 +33,23 @@ pool.connect()
 pool.on('error', (err) => {
   console.error('Postgres client error:', err);
 });
+
+app.use(
+  session({
+    store: new PgSession({
+      pool: pool, // reuse existing pool
+      tableName: 'session' // auto-creates table
+    }),
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    }
+  })
+);
 
 // Set EJS as the templating engine
 app.set("view engine", "ejs");
