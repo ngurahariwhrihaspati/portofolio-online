@@ -21,7 +21,8 @@ app.set("trust proxy", 1);
 // Enable SSL for hosted Postgres (e.g., Render) and add error handling
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: false, // internal Render connection
+  // ssl: false, // internal Render connection
+  ssl: { rejectUnauthorized: false } // for external connections
 });
 
 pool.connect()
