@@ -1,79 +1,55 @@
-.profile-section {
-    background-color: lightgray;
-    padding: 20px;
-    text-align: center;
+.container.flex {
+  display: flex;
+  padding: 20px;
+  gap: 20px; /* Space between the two sections */
 }
 
-.profile-pic {
-    width: 200px;  /* Adjust the width */
-    height: 200px; /* Adjust the height */
-    object-fit: cover;
-    border-radius: 50%; /* Makes the image circular */
-    display: block;
-    margin: 0 auto; /* Centers the image */
-}
-
-.profile {
-    margin: 0 auto;
-    height: 200px;
-    width: 200px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-
-  .container.flex {
-    display: flex;
-    /* gap: 20px; Adds spacing between the columns */
-  }
-  
-  .links {
-    flex: 1.5; /* 30% of the row space */
-    position: relative; /* Enables positioning of child elements */
-  }
-  
-  .bottom-left-link {
-    position: absolute; /* Position relative to the parent container */
-    bottom: 10px; /* Distance from the bottom */
-    left: 10px; /* Distance from the left */
-    text-decoration: none; /* Remove underline */
-    /* Link color */
-    font-weight: bold;
-  }
-  
-  .bottom-left-link:hover {
-    text-decoration: underline; /* Add underline on hover */
-  }
-  
-  .map {
-    flex: 8.5; /* 70% of the row space */
-  }
-
-.summary {
-    background-color: aliceblue;
-    padding: 20px;
-    margin-bottom: 10px;
-}
-
-.education {
-    background-color: lightgray;
-    padding: 20px;
-    margin-bottom: 10px;
-}
-
-.work_exp {
-    background-color: lightblue;
-    padding: 20px;
-    margin-bottom: 10px;
+.links {
+  flex: 1.5; /* 30% of the row space */
+  position: relative; /* Enables positioning of child elements */
 }
 
 .skills {
-    background-color: lightgreen;
-    padding: 20px;
-    margin-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.bottom-left-link {
+  position: absolute; /* Position relative to the parent container */
+  bottom: 10px; /* Distance from the bottom */
+  left: 10px; /* Distance from the left */
+  text-decoration: none; /* Remove underline */
+  /* Link color */
+  font-weight: bold;
+}
+
+.bottom-left-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+.map {
+  flex: 8.5; /* 70% of the row space */
+}
+
+.summary {
+  background-color: none;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.education {
+  background-color: lightgray;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.work_exp {
+  background-color: lightblue;
+  padding: 20px;
+  margin-bottom: 10px;
 }
 
 .menu {
-    text-align: left !important; /* Ensures menu text aligns left */
+  text-align: left !important; /* Ensures menu text aligns left */
 }
 
 .menu ul {
@@ -81,58 +57,280 @@
 }
 
 .menu li {
-    text-align: left;
-}
-
-.profile-section, 
-.summary {
-    text-align: center;
-}
-
-.profile-pic {
-    display: block;
-    margin: 0 auto; /* Centers image */
+  text-align: left;
 }
 
 .Ijazah {
-    text-align: center;
+  text-align: center;
 }
 
 .Ijazah p {
-    margin: 0;
+  margin: 0;
 }
 
 .error-popup {
-    position: relative;
-    background: #ffe0e0;
-    color: #b30000;
-    border: 1px solid #b30000;
-    border-radius: 5px;
-    padding: 10px 35px 10px 10px;
-    margin-bottom: 10px;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    animation: fadeIn 0.5s;
-  }
-  .error-icon {
-    margin-right: 8px;
-    font-size: 1.2em;
-  }
-  .close-btn {
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    cursor: pointer;
-    font-size: 1.2em;
-    color: #b30000;
-    background: none;
-    border: none;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
+  position: relative;
+  background: #ffe0e0;
+  color: #b30000;
+  border: 1px solid #b30000;
+  border-radius: 5px;
+  padding: 10px 35px 10px 10px;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  animation: fadeIn 0.5s;
+}
+.error-icon {
+  margin-right: 8px;
+  font-size: 1.2em;
+}
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  cursor: pointer;
+  font-size: 1.2em;
+  color: #b30000;
+  background: none;
+  border: none;
+}
 
+.profile-pic {
+  width: 200px; /* Adjust the width */
+  height: 200px; /* Adjust the height */
+  object-fit: cover;
+  border-radius: 50%; /* Makes the image circular */
+  display: block;
+  margin: 0 auto; /* Centers the image */
+}
 
+.feedback-input {
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
+  border-radius: 5px;
+  line-height: 22px;
+  background-color: transparent;
+  border: 2px solid #3586ff;
+  transition: all 0.3s;
+  padding: 13px;
+  margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  outline: 0;
+}
 
+.feedback-input:focus {
+  border: 2px solid #3586ff;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #3586ff;
+  border-radius: 5px;
+  border: 0;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  transition: all 0.3s;
+  margin-bottom: 20px;
+}
+
+.submit-btn:hover {
+  background: #dbe0e8;
+}
+
+/*----------bootstrap-navbar-css------------*/
+.navbar-logo {
+  padding: 15px;
+  color: #fff;
+}
+.navbar-mainbg {
+  background-color: #3586ff;
+  padding: 0px;
+}
+#navbarSupportedContent {
+  overflow: hidden;
+  position: relative;
+}
+#navbarSupportedContent ul {
+  padding: 0px;
+  margin: 0px;
+}
+#navbarSupportedContent ul li a i {
+  margin-right: 10px;
+}
+#navbarSupportedContent li {
+  list-style-type: none;
+  float: left;
+}
+#navbarSupportedContent ul li a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  font-size: 15px;
+  display: block;
+  padding: 20px 20px;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  position: relative;
+}
+
+#navbarSupportedContent ul li a:hover {
+  color: rgba(255, 255, 255, 1); /* Full white on hover */
+  text-decoration: underline;
+}
+
+#navbarSupportedContent > ul > li.active > a:hover {
+  color: #fff !important;
+}
+
+#navbarSupportedContent > ul > li.active > a {
+  color: #3586ff;
+  background-color: transparent;
+  transition: all 0.7s;
+}
+#navbarSupportedContent a:not(:only-child):after {
+  content: "\f105";
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 14px;
+  font-family: "Font Awesome 5 Free";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+  transition: 0.5s;
+}
+#navbarSupportedContent .active > a:not(:only-child):after {
+  transform: rotate(90deg);
+}
+.hori-selector {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  background-color: #fff;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top: 10px;
+  z-index: -1;
+}
+.hori-selector .right,
+.hori-selector .left {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  background-color: #fff;
+  bottom: 10px;
+}
+.hori-selector .right {
+  right: -25px;
+}
+.hori-selector .left {
+  left: -25px;
+}
+.hori-selector .right:before,
+.hori-selector .left:before {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #3586ff;
+}
+.hori-selector .right:before {
+  bottom: 0;
+  right: -25px;
+}
+.hori-selector .left:before {
+  bottom: 0;
+  left: -25px;
+}
+
+footer .social_icon,
+footer .menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+footer .social_icon li,
+footer .menu li {
+  list-style: none;
+}
+footer .social_icon li a {
+  font-size: 2em;
+  color: #ccc;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+}
+footer .social_icon li a:hover {
+  transform: translateY(-15px);
+  color: blue;
+}
+
+footer .menu li a {
+  font-size: 1.2em;
+  color: #ccc;
+  margin: 0 10px;
+  display: inline-block;
+  transition: 0.5s;
+  text-decoration: none;
+  opacity: 0.75;
+}
+footer .menu li a:hover {
+  opacity: 1;
+  color: #fff;
+}
+
+.copyright {
+  color: white;
+}
+
+/*wave and animation*/
+footer .wave {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: url(https://i.ibb.co/rZt4Nhg/wave.png);
+  background-size: 1000px 100px;
+}
+
+footer .wave#wave1 {
+  z-index: 1000;
+  opacity: 1;
+  bottom: 0;
+  animation: animateWave 4s linear infinite;
+}
+
+footer .wave#wave2 {
+  z-index: 999;
+  opacity: 0.5;
+  bottom: 10px;
+  animation: animateWave_02 4s linear infinite;
+}
+footer .wave#wave3 {
+  z-index: 1000;
+  opacity: 0.2;
+  bottom: 0;
+  animation: animateWave 3s linear infinite;
+}
+
+footer .wave#wave4 {
+  z-index: 999;
+  opacity: 0.7;
+  bottom: 20px;
+  animation: animateWave_02 3s linear infinite;
+}

@@ -1,25 +1,44 @@
 <%- include("partials/header.ejs") %>
 
+<div class="summary">
   <h1>Ngurah Ariwhrihaspati</h1>
-  <div class="menu">
-  <img class="profile-pic" src="images/id1.jpg" alt="profile image of Ngurah Ariwhrihaspati">
+  <img
+    class="profile-pic"
+    src="images/id1.jpg"
+    alt="profile image of Ngurah Ariwhrihaspati"
+  />
   <!-- <h2>Summary</h2>
   </div>
   <p>Versatile and solution-driven Software Engineer & Full-Stack Developer with hands-on experience in website development, AWS Cloud fundamentals, and Machine Learning concepts. Skilled in building end-to-end web applications and operational tools, with a strong focus on data visualization, real-time reporting dashboards, and interactive charts for operational insights. Passionate about transforming complex data into clear, actionable visuals, especially in the context of time-based reports and live monitoring systems. Continuously learning and applying modern web technologies, cloud infrastructure, and machine learning fundamentals to deliver scalable, efficient, and visually impactful solutions</p> -->
-  <hr>
-  <h2>Education</h2>
-  <p class="Ijazah">Bachelor of Engineering, Industrial Engineering - Trisakti University (2017-2022)</p>
-  <hr>
-  <h2>Work Experience</h2>
-      <h3>Administrative Staff - Bali Provincial Public Works</h3>
-      <p>January 2023 - Present</p>
-      <p>Governance of Public Works Projects in Road Construction Sector</p>
-      <ul>
-        <li>Ensured compliance with organizational policies and procedures in all administrative tasks</li>
-        <li>Supported the team in various administrative duties as needed to facilitate smooth project operations</li>
-      </ul>
+  <hr />
+</div>
 
-   <!-- <li>Responded to daily requests from stakeholders about activities or businesses in the use of road sections</li>
+<div class="edu">
+  <h2>Education</h2>
+  <p class="Ijazah">
+    Bachelor of Engineering, Industrial Engineering - Trisakti University
+    (2017-2022)
+  </p>
+  <hr />
+</div>
+
+<div class="work">
+  <h2>Work Experience</h2>
+  <h3>Administrative Staff - Bali Provincial Public Works</h3>
+  <p>January 2023 - Present</p>
+  <p>Governance of Public Works Projects in Road Construction Sector</p>
+  <ul>
+    <li>
+      Ensured compliance with organizational policies and procedures in all
+      administrative tasks
+    </li>
+    <li>
+      Supported the team in various administrative duties as needed to
+      facilitate smooth project operations
+    </li>
+  </ul>
+
+  <!-- <li>Responded to daily requests from stakeholders about activities or businesses in the use of road sections</li>
         <li>Collaborated with cross-functional teams to ensure project success</li>
         <li>Conducted quotation and goods receipt</li>
         <li>Prepared documents for budget realization reports</li>
@@ -61,8 +80,10 @@
         <li>Collaborated with cross-functional teams to ensure customer satisfaction</li>
       </ul>
     </li> -->
-  
-  <hr>
+  <hr />
+</div>
+
+<div class="skills">
   <h2>Core Competencies</h2>
   <ul class>
     <li>Data Visualizations and interactive charts</li>
@@ -70,24 +91,36 @@
     <li>Model development using Machine Learning fundamentals</li>
     <li>End-to-end Website Development (Full-Stack)</li>
   </ul>
-  <hr>
-  <h2>Awards and Certifications</h2>
-  <p>AWS Certified Cloud Practitioner - Amazon Web Services (December 2022)</p>
-  <hr>
+  <hr />
+</div>
 
-  <h2 >Other</h2>
+<div class="cert">
+  <h2>Awards and Certifications</h2>
+  <br />
+  <p>Google Data Analytics Certificate - Coursera (December 2022)</p>
+  <p>AWS Certified Cloud Practitioner - Amazon Web Services (December 2022)</p>
+  <hr />
+</div>
+
+<div class="other">
+  <h2>Other</h2>
 
   <div class="container flex">
-    <div class="links" style="flex: 1.5; position: relative;">
+    <div class="links" style="flex: 1.5; position: relative">
       <a href="/home" class="bottom-left-link">My Projects</a>
       <a href="/contact" class="">Contact Me</a>
     </div>
-  
-    <div class="map" style="flex: 8.5;">
-      <div id="map" style="height: 500px; width: 100%;"></div>
-      <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap" async defer></script>
+
+    <div class="map" style="flex: 8.5">
+      <div id="map" style="height: 500px; width: 100%"></div>
+      <script
+        src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"
+        async
+        defer
+      ></script>
       <script src="scripts/map.js"></script>
     </div>
   </div>
+</div>
 
-  <%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %>

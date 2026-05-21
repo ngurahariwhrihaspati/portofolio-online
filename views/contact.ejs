@@ -1,5 +1,6 @@
 <%- include("partials/header.ejs") %>
 
+<div class="container">
 <h1>Contact Me</h1>
 <form method="POST" action="/submit">
   <% if (locals.error) { %>
@@ -12,9 +13,9 @@
   <input name="name" type="text" class="feedback-input" placeholder="Name" />
   <input name="email" type="text" class="feedback-input" placeholder="Email" />
   <textarea name="comment-text" class="feedback-input" placeholder="Comment"></textarea>
-  <input type="submit" value="SUBMIT" />
+  <input type="submit" class="submit-btn" value="SUBMIT" />
 </form>
-
+</div>
 
 
 <%- include("partials/footer.ejs") %>

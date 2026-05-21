@@ -1,13 +1,17 @@
-
 html,
 body {
   height: 100%;
-}
-
-body {
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+}
+
+i {
+  margin-right: 10px;
+}
+
+hr {
+  margin-top: 2rem;
 }
 
 header,
@@ -15,8 +19,21 @@ footer {
   flex: 0 0 auto;
 }
 
-ul ul {
-  margin-left: 25px;
+footer {
+  position: relative;
+  width: 100%;
+  background: #3586ff;
+  min-height: 100px;
+  padding: 20px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+ul {
+  margin-left: 3rem;
 }
 
 main {
@@ -25,16 +42,17 @@ main {
 }
 
 h1 {
+  margin-top: 20px;
   text-align: center;
 }
 
 h2 {
-  margin-top: 20px;
   text-align: center;
 }
 
 h3 {
   margin-top: 20px;
+  margin-left: 30px;
 }
 
 p {
@@ -42,37 +60,11 @@ p {
   color: grey;
   margin-top: 5px;
   margin-bottom: 5px;
-}
-
-.profile {
-  height: 200px;
-  width: 200px;
-  object-fit: cover;
-  border-radius: 50%;
+  margin-left: 30px;
 }
 
 form {
-  margin-top: 50px;
-}
-
-.feedback-input {
-  color: black;
-  font-weight: 500;
-  font-size: 18px;
-  border-radius: 5px;
-  line-height: 22px;
-  background-color: transparent;
-  border: 2px solid #3586ff;
-  transition: all 0.3s;
-  padding: 13px;
-  margin-bottom: 15px;
-  width: 100%;
-  box-sizing: border-box;
-  outline: 0;
-}
-
-.feedback-input:focus {
-  border: 2px solid #3586ff;
+  margin-top: 30px;
 }
 
 textarea {
