@@ -143,6 +143,11 @@
   background: #dbe0e8;
 }
 
+.jumbotron {
+  margin: 2rem;
+  background-color: #e9ecef;
+  border-radius: 0.3rem;
+}
 /*----------bootstrap-navbar-css------------*/
 .navbar-logo {
   padding: 15px;
