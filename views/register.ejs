@@ -14,16 +14,19 @@
         <div class="card-body">
 
           <!-- Makes POST request to /register route -->
-          <form action="/register" method="POST">
+          <form action="<%= staticPages ? '#' : '/register' %>" method="POST" <% if (staticPages) { %>data-demo-form="register"<% } %>>
             <div class="form-group">
               <label for="email">Email</label>
-              <input type="email" class="form-control" name="username">
+              <input type="email" class="form-control" id="email" name="username" required autocomplete="username">
             </div>
             <div class="form-group">
               <label for="password">Password</label>
-              <input type="password" class="form-control" name="password">
+              <input type="password" class="form-control" id="password" name="password" required minlength="8" autocomplete="new-password">
             </div>
             <button type="submit" class="btn btn-dark">Register</button>
+            <% if (staticPages) { %>
+              <p class="alert alert-info mt-3 mb-0" data-demo-status role="status" aria-live="polite" hidden></p>
+            <% } %>
           </form>
 
         </div>
@@ -33,12 +36,25 @@
     <div class="col-sm-4">
       <div class="card social-block">
         <div class="card-body">
+          <% if (staticPages) { %>
+          <button class="btn btn-block" type="button" data-demo-oauth>
+          <% } else { %>
           <a class="btn btn-block" href="/auth/google" role="button">
+          <% } %>
             <i class="fab fa-google"></i>
             Sign Up with Google
+          <% if (staticPages) { %>
+          </button>
+          <% } else { %>
           </a>
+          <% } %>
         </div>
       </div>
+      <% if (staticPages) { %>
+        <p class="alert alert-info mt-3" data-demo-oauth-status role="status" aria-live="polite">
+          Demo only: Google sign-in requires a server-side OAuth callback and is not connected on GitHub Pages.
+        </p>
+      <% } %>
     </div>
 
   </div>

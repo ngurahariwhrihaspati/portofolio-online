@@ -2,7 +2,12 @@
 
 <div class="container">
 <h1>Contact Me</h1>
-<form method="POST" action="/submit">
+<% if (staticPages) { %>
+  <div class="alert alert-info" role="status">
+    Demo only: this form validates in your browser but does not send or store messages.
+  </div>
+<% } %>
+<form method="POST" action="<%= staticPages ? '#' : '/submit' %>" <% if (staticPages) { %>data-demo-form="contact"<% } %>>
   <% if (locals.error) { %>
     <div class="error-popup">
       <span class="error-icon">&#9888;</span>
@@ -10,10 +15,13 @@
       <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
     </div>
   <% } %>
-  <input name="name" type="text" class="feedback-input" placeholder="Name" />
-  <input name="email" type="text" class="feedback-input" placeholder="Email" />
-  <textarea name="comment-text" class="feedback-input" placeholder="Comment"></textarea>
+  <input name="name" type="text" class="feedback-input" placeholder="Name" aria-label="Name" required maxlength="100" />
+  <input name="email" type="email" class="feedback-input" placeholder="Email" aria-label="Email" required maxlength="254" />
+  <textarea name="comment-text" class="feedback-input" placeholder="Comment" aria-label="Comment" required maxlength="2000"></textarea>
   <input type="submit" class="submit-btn" value="SUBMIT" />
+  <% if (staticPages) { %>
+    <p class="alert alert-info mt-3" data-demo-status role="status" aria-live="polite" hidden></p>
+  <% } %>
 </form>
 </div>
 

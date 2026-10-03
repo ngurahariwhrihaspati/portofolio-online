@@ -2,9 +2,9 @@
 
 ## GitHub Pages deployment
 
-The Pages workflow builds the public portfolio and website-template pages as static files and deploys them when changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.
+The Pages workflow builds the public portfolio, website-template, contact, login, and registration pages as static files and deploys them when changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.
 
-GitHub Pages cannot run the Express server, so contact submissions, login, registration, and OAuth are not included in the static deployment. The Express app remains available for local development. To load the Google Map, add a `GOOGLE_MAPS_API_KEY` repository Actions secret and restrict that browser key to the Pages domain.
+GitHub Pages cannot run the Express server. The static contact/login/register forms demonstrate browser-side validation only; form values are not submitted or stored. The Google OAuth buttons are demo-only because OAuth requires a server-side callback. The Express app remains available for local development. To load the Google Map, add a `GOOGLE_MAPS_API_KEY` repository Actions secret and restrict that browser key to the Pages domain.
 
 
 <img width="1402" height="1122" alt="Summarize" src="https://github.com/user-attachments/assets/ca8be10c-4a71-4204-82cd-dff3cdf2de19" />

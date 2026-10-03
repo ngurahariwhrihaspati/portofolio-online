@@ -10,9 +10,7 @@
 
   <ul class="menu">
     <li><a href="<%= siteBase %>">Home</a></li>
-    <% if (!staticPages) { %>
-    <li><a href="/contact">Contact</a></li>
-    <% } %>
+    <li><a href="<%= siteBase %>contact/">Contact</a></li>
   </ul>
   <p>Copyright © <%= new Date().getFullYear() %></p>
 </footer>
@@ -22,6 +20,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap 4 JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<% if (staticPages) { %>
+<script src="<%= siteBase %>scripts/pages-demo.js"></script>
+<% } %>
 
 
 </body>

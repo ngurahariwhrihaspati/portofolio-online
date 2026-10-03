@@ -12,7 +12,11 @@ const basePath =
     : "/";
 
 await rm(outputDirectory, { recursive: true, force: true });
-await mkdir(path.join(outputDirectory, "website"), { recursive: true });
+await Promise.all(
+  ["website", "contact", "login", "register"].map((directory) =>
+    mkdir(path.join(outputDirectory, directory), { recursive: true }),
+  ),
+);
 
 const renderPage = async (template, output, locals = {}) => {
   const html = await ejs.renderFile(
@@ -32,4 +36,7 @@ await renderPage("index.ejs", "index.html", {
   googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY ?? "",
 });
 await renderPage("website.ejs", "website/index.html");
+await renderPage("contact.ejs", "contact/index.html", { error: null });
+await renderPage("login.ejs", "login/index.html", { error: null });
+await renderPage("register.ejs", "register/index.html", { error: null });
 await cp(path.join(projectRoot, "public"), outputDirectory, { recursive: true });
