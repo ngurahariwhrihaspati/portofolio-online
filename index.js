@@ -7,7 +7,6 @@ import connectPgSimple from "connect-pg-simple";
 import passport from "passport";
 import { Strategy } from "passport-local";
 import GoogleStrategy from "passport-google-oauth2";
-import bcrypt from "bcrypt";
 
 const { Pool } = pkg;
 const PgSession = connectPgSimple(session);
@@ -21,8 +20,6 @@ app.set("trust proxy", 1);
 // Enable SSL for hosted Postgres (e.g., Render) and add error handling
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  // ssl: false, // internal Render connection
-  ssl: { rejectUnauthorized: false }, // for external connections
 });
 
 pool
@@ -119,7 +116,7 @@ app.get("/home", (req, res) => {
 });
 
 app.get(
-  "/auth/google",
+  "/auth/google/",
   passport.authenticate("google", {
     scope: ["profile", "email"],
   }),
