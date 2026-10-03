@@ -4,12 +4,12 @@
   <h1>Ngurah Ariwhrihaspati</h1>
   <img
     class="profile-pic"
-    src="images/id1.jpg"
+    src="<%= siteBase %>images/id1.jpg"
     alt="profile image of Ngurah Ariwhrihaspati"
   />
   <h2>Summary</h2>
   <p>
-    Versatile and solution-driven Software Engineer & Full-Stack Developer with
+    Versatile and solution-driven professional with
     hands-on experience in website development, AWS Cloud fundamentals, and
     Machine Learning concepts. Skilled in building end-to-end web applications
     and operational tools, with a strong focus on data visualization, real-time
@@ -103,18 +103,22 @@
 
   <div class="container flex">
     <div class="links" style="flex: 1.5; position: relative">
-      <a href="/home" class="bottom-left-link">My Projects</a>
+      <a href="<%= siteBase %>website/" class="bottom-left-link">My Projects</a>
+      <% if (!staticPages) { %>
       <a href="/contact" class="">Contact Me</a>
+      <% } %>
     </div>
 
     <div class="map" style="flex: 8.5">
       <div id="map" style="height: 500px; width: 100%"></div>
+      <% if (googleMapsApiKey) { %>
       <script
         src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap"
         async
         defer
       ></script>
-      <script src="scripts/map.js"></script>
+      <script src="<%= siteBase %>scripts/map.js"></script>
+      <% } %>
     </div>
   </div>
 </div>

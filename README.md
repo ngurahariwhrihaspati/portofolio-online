@@ -1,5 +1,11 @@
 [Canvas.pdf](https://github.com/user-attachments/files/31625702/Canvas.pdf)
 
+## GitHub Pages deployment
+
+The Pages workflow builds the public portfolio and website-template pages as static files and deploys them when changes are pushed to `main`. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.
+
+GitHub Pages cannot run the Express server, so contact submissions, login, registration, and OAuth are not included in the static deployment. The Express app remains available for local development. To load the Google Map, add a `GOOGLE_MAPS_API_KEY` repository Actions secret and restrict that browser key to the Pages domain.
+
 
 <img width="1402" height="1122" alt="Summarize" src="https://github.com/user-attachments/assets/ca8be10c-4a71-4204-82cd-dff3cdf2de19" />
 <img width="1536" height="1024" alt="Summarize1" src="https://github.com/user-attachments/assets/0eca9950-ba2c-4a8a-8205-d85ed2595d58" />

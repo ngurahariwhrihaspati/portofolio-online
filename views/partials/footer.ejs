@@ -9,8 +9,10 @@
   </ul>
 
   <ul class="menu">
-    <li><a href="/">Home</a></li>
+    <li><a href="<%= siteBase %>">Home</a></li>
+    <% if (!staticPages) { %>
     <li><a href="/contact">Contact</a></li>
+    <% } %>
   </ul>
   <p>Copyright © <%= new Date().getFullYear() %></p>
 </footer>

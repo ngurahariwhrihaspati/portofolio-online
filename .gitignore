@@ -15,5 +15,6 @@ yarn-error.log
 # Coverage reports
 coverage/
 *.log
+/dist/
 # Database keys and sensitive files
 db_key.txt

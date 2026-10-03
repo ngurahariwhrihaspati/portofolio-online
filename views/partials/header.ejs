@@ -13,9 +13,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
 
-    <link rel="stylesheet" href="/styles/layout.css" />
-    <link rel="stylesheet" href="/styles/content.css" />
-    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="<%= siteBase %>styles/layout.css" />
+    <link rel="stylesheet" href="<%= siteBase %>styles/content.css" />
+    <link rel="stylesheet" href="<%= siteBase %>styles/style.css" />
 
     <link
       rel="stylesheet"
@@ -32,7 +32,7 @@
 
   <header>
     <nav class="navbar navbar-expand-custom navbar-mainbg">
-      <a class="navbar-brand navbar-logo" href="/">My Portfolio</a>
+      <a class="navbar-brand navbar-logo" href="<%= siteBase %>">My Portfolio</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -52,17 +52,19 @@
           </div>
 
           <li class="nav-item">
-            <a class="nav-link" href="/"><i class="fas fa-home"></i> Home </a>
+            <a class="nav-link" href="<%= siteBase %>"><i class="fas fa-home"></i> Home </a>
           </li>
 
+          <% if (!staticPages) { %>
           <li class="nav-item">
             <a class="nav-link" href="/contact"
               ><i class="far fa-address-book"></i> Contact</a
             >
           </li>
+          <% } %>
 
           <li class="nav-item">
-            <a class="nav-link" href="/website"
+            <a class="nav-link" href="<%= siteBase %>website/"
               ><i class="fas fa-code"></i> Website Template</a
             >
           </li>

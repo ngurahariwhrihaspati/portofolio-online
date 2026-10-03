@@ -14,6 +14,8 @@ const PgSession = connectPgSimple(session);
 dotenv.config();
 
 const app = express();
+app.locals.siteBase = "/";
+app.locals.staticPages = false;
 // trust Render proxy so secure cookies work
 app.set("trust proxy", 1);
 
