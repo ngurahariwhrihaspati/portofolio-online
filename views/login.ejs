@@ -2,6 +2,11 @@
 
   <div class="container mt-2 mb-4">
     <h1>Login</h1>
+    <% if (staticPages) { %>
+      <div class="alert alert-info" role="status">
+        Demo only: use test values, never a real password. Nothing is submitted or stored.
+      </div>
+    <% } %>
     <% if (typeof error !== 'undefined' && error) { %>
       <div class="alert alert-danger" role="alert">
         <%= error %>
@@ -17,11 +22,11 @@
             <form action="<%= staticPages ? '#' : '/login' %>" method="POST" <% if (staticPages) { %>data-demo-form="login"<% } %>>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" name="username" required autocomplete="username">
+                <input type="email" class="form-control" id="email" name="username" required autocomplete="<%= staticPages ? 'off' : 'username' %>">
               </div>
               <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password">
+                <input type="password" class="form-control" id="password" name="password" required autocomplete="<%= staticPages ? 'off' : 'current-password' %>">
               </div>
               <button type="submit" class="btn btn-dark">Login</button>
               <% if (staticPages) { %>
